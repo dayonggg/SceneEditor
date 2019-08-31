@@ -24,11 +24,11 @@ function createWindow() {
 	 */
 	mainWindow = new BrowserWindow({
 		title: 'Game Resource Designer',
-		height: 563,
+		height: 700,
 		useContentSize: true,
-		width: 1000,
-		minWidth: 1000,
-		minHeight: 540,
+		width: 1200,
+		minWidth: 1200,
+		minHeight: 700,
 		webPreferences: {
 			webSecurity: false,
 		},
