@@ -10,8 +10,8 @@ html,body,#app{
 /* menu */
 .el-menu .el-menu-item,
 .el-menu .el-submenu .el-submenu__title{
-	height: 28px;
-	line-height: 28px;
+	height: 30px;
+	line-height: 30px;
 	font-size: 12px;
 	padding: 0 10px;
 }

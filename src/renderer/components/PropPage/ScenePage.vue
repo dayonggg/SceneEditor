@@ -1,7 +1,7 @@
 <template>
 	<div class="scene-page">
 		<el-card class="object-list-view">
-			<el-tree :data="sceneData" :props="defaultProps" :default-expand-all="true" :expand-on-click-node="false"></el-tree>
+			<el-tree :data="sceneData" :props="defaultProps" :default-expand-all="true" :expand-on-click-node="false" @node-contextmenu="rightClick"></el-tree>
 		</el-card>
 	</div>
 </template>
@@ -13,12 +13,12 @@
 			return {
 				sceneData: [{
 					label: 'Camera'
-				},{
+				}, {
 					label: 'light'
-				},{
+				}, {
 					label: 'Scene',
-					children:[{
-						label:'ground'
+					children: [{
+						label: 'ground'
 					}]
 				}],
 				defaultProps: {
@@ -37,7 +37,12 @@
 
 		},
 		methods: {
-
+			rightClick(MouseEvent, object, Node, element) { // 鼠标右击触发事件
+				console.log('右键被点击的event:', MouseEvent)
+				console.log('右键被点击的object:', object)
+				console.log('右键被点击的value:', Node)
+				console.log('右键被点击的element:', element)
+			}
 		},
 		watch: {
 
@@ -51,16 +56,16 @@
 		height: 220px;
 		overflow: auto;
 	}
-	
-	.scene-page .el-tree-node__content{
+
+	.scene-page .el-tree-node__content {
 		height: 22px;
 	}
-	
-	.scene-page .el-tree-node__content>.el-tree-node__expand-icon{
+
+	.scene-page .el-tree-node__content>.el-tree-node__expand-icon {
 		padding: 4px;
 	}
-	
-	.scene-page .el-tree-node__label{
+
+	.scene-page .el-tree-node__label {
 		font-size: 13px;
 	}
 </style>
