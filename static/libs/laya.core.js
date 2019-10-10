@@ -6214,7 +6214,7 @@ var Stat=(function(){
 			Stat._ctx=Stat._canvas.getContext('2d');
 			Stat._ctx.textBaseline="top";
 			Stat._ctx.font=Stat._fontSize+"px Arial";
-			Stat._canvas.source.style.cssText="pointer-events:none;background:rgba(150,150,150,0.8);z-index:100;position: absolute;direction:ltr;left:"+x+"px;top:30px;width:"+(Stat._width / pixel)+"px;height:"+(Stat._height / pixel)+"px;";
+			Stat._canvas.source.style.cssText="pointer-events:none;background:rgba(150,150,150,0.8);z-index:100;position: absolute;direction:ltr;left:0px;top:30px;width:"+(Stat._width / pixel)+"px;height:"+(Stat._height / pixel)+"px;";
 		}
 		Browser.container.appendChild(Stat._canvas.source);
 		Stat._first=true;
@@ -9203,10 +9203,7 @@ var Render=(function(){
 		this._timeId=0;
 		Render._mainCanvas.source.id="layaCanvas";
 		Render._mainCanvas.source.width=width;
-		console.log('-----',width,height)
 		Render._mainCanvas.source.height=height;
-		Render._mainCanvas.source.top='30px';
-		Render._mainCanvas.source.left='00px';
 		if (laya.renders.Render.isConchApp){
 			Browser.document.body.appendChild(Render._mainCanvas.source);
 		}
