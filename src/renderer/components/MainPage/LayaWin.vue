@@ -22,7 +22,8 @@
 				cameraSelect: [],
 				ray: new Laya.Ray(new Laya.Vector3(0, 0, 0), new Laya.Vector3(0, 0, 0)),
 				point: new Laya.Vector2(),
-				outHitResult: new Laya.HitResult()
+				outHitResult: new Laya.HitResult(),
+				// activeModel:{}
 			}
 		},
 		components: {
@@ -38,7 +39,6 @@
 			window.onresize = () => {
 				this.resetStageSize()
 			}
-
 			this.PreloadingRes()
 		},
 		methods: {
@@ -98,24 +98,28 @@
 				//拿到射线碰撞的物体
 				this.scene.physicsSimulation.rayCast(this.ray, this.outHitResult)
 				//如果碰撞到物体
-				if (this.outHitResult.succeeded) {
+				if (this.outHitResult.succeeded && this.outHitResult.collider.owner.name ) {
 					console.log("碰撞到物体！！", this.outHitResult.collider.owner)
 					//像素线精灵
-					this.lineSprite3D = this.scene.addChild(new Laya.Sprite3D())
-					this.ownerLineSprite3D = this.lineSprite3D.addChild(new Laya.PixelLineSprite3D(5000));
-					console.log(this.outHitResult.collider.owner.meshRenderer.boundingBox)
-					this.lineSprite3D.active = true
+					let lineSprite3D = this.scene.addChild(new Laya.Sprite3D())
+					this.ownerLineSprite3D = lineSprite3D.addChild(new Laya.PixelLineSprite3D(5000));
+					// console.log(this.outHitResult.collider.owner.meshRenderer.boundingBox)
+					lineSprite3D.active = true
 					
 					let boundingBox = this.outHitResult.collider.owner.meshRenderer.boundingBox
-					this.tt3D = this.scene.addChild(new Laya.Sprite3D())
-					this.ttLineSprite3D = this.tt3D.addChild(new Laya.PixelLineSprite3D(2))
+					let tt3D = this.scene.addChild(new Laya.Sprite3D())
+					let ttLineSprite3D = tt3D.addChild(new Laya.PixelLineSprite3D(2))
 					let lineStartPoint = new Laya.Vector3()
 					let lineStartFinish = new Laya.Vector3()
 					lineStartFinish.x = lineStartPoint.x = (boundingBox.max.x + boundingBox.min.x)/2
 					lineStartFinish.z = lineStartPoint.z = (boundingBox.max.z + boundingBox.min.z)/2
 					lineStartPoint.y = boundingBox.max.y
 					lineStartFinish.y = lineStartPoint.y + 3
-					this.ttLineSprite3D.addLine(lineStartPoint, lineStartFinish, Laya.Color.GREEN, Laya.Color.GREEN)
+					ttLineSprite3D.addLine(lineStartPoint, lineStartFinish, Laya.Color.GREEN, Laya.Color.GREEN)
+					this.activeModel.destroy()
+					this.activeModel = tt3D
+					console.log(tt3D)
+					// this.activeModel.destroy()
 					
 				}
 			},
