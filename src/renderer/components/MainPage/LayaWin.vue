@@ -14,6 +14,8 @@
 	import $ from 'Jquery'
 	import CameraMoveScript from '../LayaPage/ComponentScript/CameraMoveScript.js'
 	import Tool from '../LayaPage/ComponentScript/Tool.js'
+	import D from '../Common/Data.js'
+
 	export default {
 		name: "laya-win",
 		data() {
@@ -26,14 +28,14 @@
 				// activeModel:{}
 			}
 		},
-		components: {
-		},
+		components: {},
 		props: {
 
 		},
 		mounted() {
-			let winWidth = $(window).width()
-			let winHeight = $(window).height()
+			console.log(D.dpr)
+			let winWidth = $(window).width() * D.dpr
+			let winHeight = $(window).height() * D.dpr
 			Laya3D.init(winWidth - 300, winHeight - 30)
 			Laya.Stat.show()
 			window.onresize = () => {
@@ -63,7 +65,7 @@
 				this.camera1.name = 'Free Camera'
 				this.camera1.addComponent(CameraMoveScript)
 				Laya.stage.on(Laya.Event.MOUSE_DOWN, this, this.checkHit)
-				
+
 				this.scene.addChild(this.camera1)
 				this.cameraSelect.push('Free Camera')
 				this.activeCamera = 'Free Camera'
@@ -81,7 +83,7 @@
 				ground2.transform.localScale = new Laya.Vector3(1, 1, 1)
 				ground2.transform.translate(new Laya.Vector3(2, 0, 1))
 				ground2.name = 'ground2'
-				console.log(ground1,ground2)
+				console.log(ground1, ground2)
 			},
 			toggleCamera() {
 				for (let i = 0; i < this.cameraSelect.length; i++) {
@@ -98,21 +100,21 @@
 				//拿到射线碰撞的物体
 				this.scene.physicsSimulation.rayCast(this.ray, this.outHitResult)
 				//如果碰撞到物体
-				if (this.outHitResult.succeeded && this.outHitResult.collider.owner.name ) {
+				if (this.outHitResult.succeeded && this.outHitResult.collider.owner.name) {
 					console.log("碰撞到物体！！", this.outHitResult.collider.owner)
 					//像素线精灵
 					let lineSprite3D = this.scene.addChild(new Laya.Sprite3D())
 					this.ownerLineSprite3D = lineSprite3D.addChild(new Laya.PixelLineSprite3D(5000));
 					// console.log(this.outHitResult.collider.owner.meshRenderer.boundingBox)
 					lineSprite3D.active = true
-					
+
 					let boundingBox = this.outHitResult.collider.owner.meshRenderer.boundingBox
 					let tt3D = this.scene.addChild(new Laya.Sprite3D())
 					let ttLineSprite3D = tt3D.addChild(new Laya.PixelLineSprite3D(2))
 					let lineStartPoint = new Laya.Vector3()
 					let lineStartFinish = new Laya.Vector3()
-					lineStartFinish.x = lineStartPoint.x = (boundingBox.max.x + boundingBox.min.x)/2
-					lineStartFinish.z = lineStartPoint.z = (boundingBox.max.z + boundingBox.min.z)/2
+					lineStartFinish.x = lineStartPoint.x = (boundingBox.max.x + boundingBox.min.x) / 2
+					lineStartFinish.z = lineStartPoint.z = (boundingBox.max.z + boundingBox.min.z) / 2
 					lineStartPoint.y = boundingBox.max.y
 					lineStartFinish.y = lineStartPoint.y + 3
 					ttLineSprite3D.addLine(lineStartPoint, lineStartFinish, Laya.Color.GREEN, Laya.Color.GREEN)
@@ -120,13 +122,13 @@
 					this.activeModel = tt3D
 					console.log(tt3D)
 					// this.activeModel.destroy()
-					
+
 				}
 			},
 			//窗口尺寸重置
 			resetStageSize() {
-				let winWidth = $(window).width()
-				let winHeight = $(window).height()
+				let winWidth = $(window).width() * D.dpr
+				let winHeight = $(window).height() * D.dpr
 				Laya.stage.width = winWidth - 300
 				Laya.stage.height = winHeight - 30
 			}
